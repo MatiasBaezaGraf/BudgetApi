@@ -22,20 +22,29 @@ def category_list(request):
         return JsonResponse(serializer.errors, status=400)
 
 @csrf_exempt
-def category_detail(request, pk):
+def user_categories(request, user):
+    try:
+        category = Category.objects.filter(user=user)
+    except Category.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = CategorySerializer(category, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    
+    else:
+        return HttpResponse(status=400)
+
+@csrf_exempt
+def delete_category(request, pk):
     try:
         category = Category.objects.get(pk=pk)
     except Category.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'GET':
-        serializer = CategorySerializer(category)
-        return JsonResponse(serializer.data)
-    
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         category.delete()
         return HttpResponse(status=204)
-    
     else:
         return HttpResponse(status=400)
 
@@ -48,6 +57,7 @@ def expense_list(request):
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
+        print(data)
         serializer = ExpenseSerializer(data=data)
         
         if serializer.is_valid():
@@ -57,20 +67,29 @@ def expense_list(request):
         return JsonResponse(serializer.errors, status=400)
 
 @csrf_exempt
-def expense_detail(request, pk):
+def user_expenses(request, user):
+    try:
+        expense = Expense.objects.all().filter(user=user)
+    except Expense.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = ExpenseSerializer(expense, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    
+    else:
+        return HttpResponse(status=400)
+
+@csrf_exempt
+def delete_expense(request, pk):
     try:
         expense = Expense.objects.get(pk=pk)
     except Expense.DoesNotExist:
         return HttpResponse(status=404)
 
-    if request.method == 'GET':
-        serializer = ExpenseSerializer(expense)
-        return JsonResponse(serializer.data)
-    
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         expense.delete()
         return HttpResponse(status=204)
-    
     else:
         return HttpResponse(status=400)
 
@@ -83,4 +102,3 @@ def category_expenses(request, pk):
     
     else:
         return HttpResponse(status=400)
-

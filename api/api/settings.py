@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['matiasbaezagraf1999.pythonanywhere.com']
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,10 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'resources'
+    'resources',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleWare',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

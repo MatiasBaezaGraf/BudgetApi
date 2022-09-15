@@ -53,7 +53,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 ALLOWED_HOSTS = [
-    'matiasbaezagraf1999.pythonanywhere.com
+    'matiasbaezagraf1999.pythonanywhere.com'
 ]
 
 ROOT_URLCONF = 'api.urls'

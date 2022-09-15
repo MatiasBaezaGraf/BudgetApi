@@ -38,7 +38,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -51,6 +50,10 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+]
+
+ALLOWED_HOSTS = [
+    'matiasbaezagraf1999.pythonanywhere.com
 ]
 
 ROOT_URLCONF = 'api.urls'

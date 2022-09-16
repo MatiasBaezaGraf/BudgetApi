@@ -9,4 +9,5 @@ urlpatterns = [
     path('expenses/<str:user>/', views.user_expenses),
     path('expenses/delete/<int:pk>/', views.delete_expense),
     path('expenses/category/<int:pk>', views.category_expenses),
+    path('reset/<str:user>/', views.reset_user),
 ]

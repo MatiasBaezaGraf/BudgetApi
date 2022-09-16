@@ -31,10 +31,6 @@ def user_categories(request, user):
 
     if request.method == 'GET':
         return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == 'DELETE':
-        categories.delete()
-        HttpResponse(status=204)
     
     else:
         return HttpResponse(status=400)
@@ -80,10 +76,6 @@ def user_expenses(request, user):
 
     if request.method == 'GET':
         return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == 'DELETE':
-        expenses.delete()
-        return HttpResponse(status=204)
     
     else:
         return HttpResponse(status=400)
@@ -111,3 +103,14 @@ def category_expenses(request, pk):
     else:
         return HttpResponse(status=400)
 
+@csrf_exempt
+def reset_user(request, user):
+    expenses = Expense.objects.all().filter(user=user)
+    categories = Categories.objects.all().filter(user=user)
+
+    if request.method == 'DELETE':
+        expenses.delete()
+        categories.delete()
+        return HttpResponse(status=204)
+    else:
+        return HttpResponse(status=400)

@@ -24,13 +24,17 @@ def category_list(request):
 @csrf_exempt
 def user_categories(request, user):
     try:
-        category = Category.objects.filter(user=user)
+        categories = Category.objects.filter(user=user)
+        serializer = CategorySerializer(categories, many=True)
     except Category.DoesNotExist:
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        serializer = CategorySerializer(category, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'DELETE':
+        categories.delete()
+        HttpResponse(status=204)
     
     else:
         return HttpResponse(status=400)
@@ -57,7 +61,6 @@ def expense_list(request):
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
-        print(data)
         serializer = ExpenseSerializer(data=data)
         
         if serializer.is_valid():
@@ -68,14 +71,19 @@ def expense_list(request):
 
 @csrf_exempt
 def user_expenses(request, user):
+
     try:
-        expense = Expense.objects.all().filter(user=user)
+        expenses = Expense.objects.all().filter(user=user)
+        serializer = ExpenseSerializer(expenses, many=True)
     except Expense.DoesNotExist:
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        serializer = ExpenseSerializer(expense, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'DELETE':
+        expenses.delete()
+        return HttpResponse(status=204)
     
     else:
         return HttpResponse(status=400)
@@ -102,3 +110,4 @@ def category_expenses(request, pk):
     
     else:
         return HttpResponse(status=400)
+

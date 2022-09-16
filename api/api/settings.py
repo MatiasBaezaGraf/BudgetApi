@@ -49,7 +49,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
+        'https://wallet-ten-theta.vercel-app/',
 ]
 
 ALLOWED_HOSTS = [

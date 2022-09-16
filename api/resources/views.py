@@ -106,7 +106,7 @@ def category_expenses(request, pk):
 @csrf_exempt
 def reset_user(request, user):
     expenses = Expense.objects.all().filter(user=user)
-    categories = Categories.objects.all().filter(user=user)
+    categories = Category.objects.all().filter(user=user)
 
     if request.method == 'DELETE':
         expenses.delete()
